@@ -1,6 +1,6 @@
 {
   "name": "things-profile",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
@@ -22,8 +22,8 @@
     "paper-button": "PolymerElements/paper-button#^1.0.11",
     "paper-card": "PolymerElements/paper-card#^1.1.1",
     "paper-dialog-behavior": "PolymerElements/paper-dialog-behavior#^1.2.5",
-    "things-global-behavior": "ThingsElements/things-global-behavior#^0.0.15",
-    "things-auth": "ThingsElements/things-auth#^0.0.1"
+    "things-global-behavior": "ThingsElements/things-global-behavior",
+    "things-auth": "ThingsElements/things-auth"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
