@@ -23,20 +23,58 @@
   <template>
 
     <style>
-
       :host {
         display: inline-flex;
-        border-radius: 3px;
-        border: 1px solid #ccc;
-        padding: 15px;
-        position: relative;        
+        @apply(--things-profile-dialog);
       }
+      paper-card{
+        min-width:250px;
+      }
+      paper-card::shadow .header{
+        background-color:var(--paper-blue-grey-400);
+      }
+      paper-card::shadow .title-text{
+        padding:15px 0 70px 0 !important;
+        color:#fff !important;
+        text-align:center;
+      }
+      img{
+        @apply(--things-profile-img);
+      }
+      .close{
+        background-color:transparent;
+        position:absolute;
+        opacity:.5;
+        top:5px;
+        right:5px;
+        border:none;
+        padding:0;
+        color:#fff;
+      }
+      .logout{
+        @apply(--things-profile-logout);
+      }
+      .logout iron-icon{
+        @apply(--things-icon);
+      }
+      .user{
+        margin-top:60px;
+        color:var(--things-primary-text-color);
+        text-align:center;
+        font-size:13px;
+      }
+      .user strong{
+        display:block;
+        font-size:15px;
+      }
+      paper-button{
+        @apply(--things-button-important);
+        @apply(--things-default-margin);
+        width:89%;
+      }
+      button:focus{outline:none}
 
-      :host(:hover) {
-        box-shadow: 0 0 5px #ccc;
-      }
-      
-      :host > div {
+      /*:host > div {
         display: flex; 
       }
       
@@ -77,8 +115,6 @@
 
       paper-button.custom {
         --paper-button-ink-color: var(--paper-pink-a200);
-        /* These could also be individually defined for each of the
-          specific css classes, but we'll just do it once as an example */
         --paper-button-flat-keyboard-focus: {
           background-color: var(--paper-pink-a200);
           color: white !important;
@@ -109,14 +145,33 @@
 
       paper-button.green[active] {
         background-color: var(--paper-red-500);
-      }
+      }*/
 
     </style>
 
-    <paper-card heading="Profile">
+    <paper-card heading="X-MES">
+      <button on-tap="closeProfile" class="close"><iron-icon icon="icons:cancel"></iron-icon></button>
       <img src="[[img]]">
+      <button on-tap="logout" class="logout"><iron-icon icon="icons:exit-to-app"></iron-icon></button>
+
       <div id="info">
         <content>
+          <div class="user">
+            <strong>[[globals.user.name]]</strong>
+            [[globals.user.email]]
+          </div>
+          <paper-button raised color="green"
+                on-click="showChangePasswordScreen">
+            <things-i18n-msg msgid="button.change_password" auto>Change Password</things-i18n-msg>
+          </paper-button>
+          <things-logout 
+            id="logout" 
+            action="logout" 
+            icon="icons:exit-to-app"
+            hidden>
+          </things-logout>
+        </content>
+        <!-- <content>
           <h2>
             <things-i18n-msg msgid="label.user_name" auto>Name</things-i18n-msg>: [[globals.user.name]] 
           </h2>
@@ -147,7 +202,7 @@
               </things-logout>
             </div>
           </paper-card>
-        </content>
+        </content> -->
       </div>
     </paper-card>
   </template>
