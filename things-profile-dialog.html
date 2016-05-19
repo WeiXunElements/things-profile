@@ -21,27 +21,26 @@
 
 <dom-module id="things-profile-dialog">
   <template>
-
     <style>
       :host {
         display: inline-flex;
         @apply(--things-profile-dialog);
       }
-      paper-card{
+      paper-card {
         min-width:250px;
       }
-      paper-card::shadow .header{
+      paper-card::shadow .header {
         background-color:var(--paper-blue-grey-400);
       }
-      paper-card::shadow .title-text{
+      paper-card::shadow .title-text {
         padding:15px 0 70px 0 !important;
         color:#fff !important;
         text-align:center;
       }
-      img{
+      img {
         @apply(--things-profile-img);
       }
-      .close{
+      .close {
         background-color:transparent;
         position:absolute;
         opacity:.5;
@@ -51,102 +50,30 @@
         padding:0;
         color:#fff;
       }
-      .logout{
+      .logout {
         @apply(--things-profile-logout);
       }
-      .logout iron-icon{
+      .logout iron-icon {
         @apply(--things-icon);
       }
-      .user{
+      .user {
         margin-top:60px;
         color:var(--things-primary-text-color);
         text-align:center;
         font-size:13px;
       }
-      .user strong{
+      .user strong {
         display:block;
         font-size:15px;
       }
-      paper-button{
+      paper-button {
         @apply(--things-button-important);
         @apply(--things-default-margin);
         width:89%;
       }
-      button:focus{outline:none}
-
-      /*:host > div {
-        display: flex; 
+      button:focus {
+        outline:none
       }
-      
-      a {
-        text-decoration: none;
-        font-size: 20px;
-        color: black;
-        text-align: right;
-      }
-      
-      img {
-        border-radius: 50%;
-        border: 7px solid #fff;
-        box-shadow: 0 0 7px #000;
-        width: 100px;
-        height: 100px;
-      }
-      
-      #info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-left: 45px;
-      }
-      
-      h2, h3 {
-        font-weight: 400;
-        margin: 0;
-        color: navy;
-      }
-      
-      h3 {
-        font-weight: 300;
-        color: #000000;
-        flex: 1;
-        margin: 10px 0 0 0;
-      }
-
-      paper-button.custom {
-        --paper-button-ink-color: var(--paper-pink-a200);
-        --paper-button-flat-keyboard-focus: {
-          background-color: var(--paper-pink-a200);
-          color: white !important;
-        };
-        --paper-button-raised-keyboard-focus: {
-          background-color: var(--paper-pink-a200) !important;
-          color: white !important;
-        };
-      }
-
-      paper-button.custom:hover {
-        background-color: var(--paper-indigo-100);
-      }
-
-      paper-button.indigo {
-        background-color: var(--paper-indigo-500);
-        color: white;
-        --paper-button-raised-keyboard-focus: {
-          background-color: var(--paper-pink-a200) !important;
-          color: white !important;
-        };
-      }
-
-      paper-button.green {
-        background-color: var(--paper-green-500);
-        color: white;
-      }
-
-      paper-button.green[active] {
-        background-color: var(--paper-red-500);
-      }*/
-
     </style>
 
     <paper-card heading="X-MES">
@@ -160,10 +87,13 @@
             <strong>[[globals.user.name]]</strong>
             [[globals.user.email]]
           </div>
-          <paper-button raised color="green"
-                on-click="showChangePasswordScreen">
+
+          <paper-button 
+            raised color="green"
+            on-click="showChangePasswordScreen">
             <things-i18n-msg msgid="button.change_password" auto>Change Password</things-i18n-msg>
           </paper-button>
+
           <things-logout 
             id="logout" 
             action="logout" 
@@ -171,101 +101,64 @@
             hidden>
           </things-logout>
         </content>
-        <!-- <content>
-          <h2>
-            <things-i18n-msg msgid="label.user_name" auto>Name</things-i18n-msg>: [[globals.user.name]] 
-          </h2>
-          <h3>
-            <things-i18n-msg msgid="label.email" auto>Email</things-i18n-msg>: [[globals.user.email]] 
-          </h3>
-          <paper-card>
-            <div class="card-actions">
-              <paper-button raised 
-                class="custom indigo" 
-                on-click="showChangePasswordScreen">
-                <things-i18n-msg msgid="button.change_password" auto>Change Password</things-i18n-msg>
-              </paper-button>
-
-              <paper-button raised class="custom indigo" on-tap="logout">
-                <things-i18n-msg msgid="button.logout" auto>Logout</things-i18n-msg>
-              </paper-button>
-              
-              <paper-button raised class="custom green" on-tap="closeProfile">
-                <things-i18n-msg msgid="button.close" auto>Close</things-i18n-msg>
-              </paper-button>             
-              
-              <things-logout 
-                id="logout" 
-                action="logout" 
-                icon="icons:exit-to-app"
-                hidden>
-              </things-logout>
-            </div>
-          </paper-card>
-        </content> -->
       </div>
     </paper-card>
   </template>
 
   <script>
-    (function() {
-      'use strict';
+    Polymer({
+      is: 'things-profile-dialog',
 
-      Polymer({
-        is: 'things-profile-dialog',
-
-        properties : {
-          img : {
-            type: String,
-            value: '../../images/profile.png'
-          }
-        },
-
-        behaviors: [ 
-          Things.GlobalBehavior,
-          // Things.I18nBehavior,
-          Polymer.PaperDialogBehavior 
-        ],
-
-        /**
-         * Logout
-         */
-        logout: function(event) {
-           this.$.logout.logout(); 
-           this.closeProfile();
-        },
-
-        /**
-         * Show Change Password Screen
-         */
-        showChangePasswordScreen: function(event) {
-          var element = document.createElement('things-change-password');
-          var dialog = app.$['common-full-dialog'];
-          element.actionUrl = 'users/change_pass/' + this.globals.user.id;
-          element.method = 'POST';
-
-          element.addEventListener("things-change-password-success", function(event) {
-            dialog.closeBasicDialog();
-          });
-
-          element.addEventListener("things-change-password-failure", function(event) {
-            var response = event.detail.request.xhr.response;
-            this.openResponseError(response);
-          });
-
-          dialog.openBasicDialog(element, true, null);
-        },
-
-        /**
-         * Close Profile Screen
-         */
-        closeProfile: function(event) {
-          this.close();
+      properties : {
+        img : {
+          type: String,
+          value: '../../images/profile.png'
         }
+      },
 
-      });
+      behaviors: [ 
+        Things.GlobalBehavior,
+        Polymer.PaperDialogBehavior 
+      ],
 
-    })();
+      /**
+       * Logout
+       */
+      logout: function(event) {
+         this.$.logout.logout(); 
+         this.closeProfile();
+      },
+
+      /**
+       * Show Change Password Screen
+       */
+      showChangePasswordScreen: function(event) {
+        var element = document.createElement('things-change-password');
+        element.title = 'Change Password';
+        var dialog = app.$['common-full-dialog'];
+        element.actionUrl = 'users/change_pass/' + this.globals.user.id;
+        element.method = 'POST';
+
+        element.addEventListener("things-change-password-success", function(event) {
+          dialog.closeBasicDialog();
+        });
+
+        element.addEventListener("things-change-password-failure", function(event) {
+          var response = event.detail.request.xhr.response;
+          this.openResponseError(response);
+        });
+
+        dialog.openBasicDialog(element, true, null);
+      },
+
+      /**
+       * Close Profile Screen
+       */
+      closeProfile: function(event) {
+        this.close();
+      }
+
+    });
   </script>
 
 </dom-module>
