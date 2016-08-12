@@ -17,6 +17,7 @@
       role-list-url ="roles"
       role-request-url ="request_role"
       img="../../images/profile.png">
+    </things-profile-dialog>
 
 @demo demo/index.html
 -->
@@ -117,7 +118,7 @@
                     <things-logout id="logout" action="logout" logout-path="logout" icon="icons:exit-to-app" hidden>
                     </things-logout>
                 </content>
-                <div name="role-request" hidden="{{!requestRoleAble}}">
+                <div name="role-request">
                     <things-resource-combo required label="[[lRoles]]" resource-url="[[roleListUrl]]" items-prop="items" value="{{role}}" value-path="id"></things-resource-combo>
                     <things-ajax id="requestRole" resource-url="[[roleRequestUrl]]" method="POST" content-type="application/json" on-things-ajax-response="_handleSuccess">
                     </things-ajax>
@@ -155,11 +156,11 @@
 
                 roleRequestUrl: {
                     type: String
-                },
-                requestRoleAble: {
-                    computed: 'computeRequestRoleAble(globals.user)',
-                    value: true
                 }
+                // requestRoleAble : {
+                //   computed : 'computeRequestRoleAble(globals.user)',
+                //   value : true
+                // }
             },
 
             behaviors: [
