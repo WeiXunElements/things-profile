@@ -4,165 +4,256 @@
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
 <link rel="import" href="../things-auth/things-change-password.html">
-
+<link rel="import" href="../things-resource-combo/things-code-combo.html">
+<link rel="import" href="../things-resource-combo/things-resource-combo.html">
 <!--
-  `<things-profile-dialog>` 사용자 프로파일 
+  `<things-profile-dialog>` 사용자 프로파일
 
   Example
 
-    <things-profile-dialog 
-      name="elidom" 
-      email="elidom@example.com" 
+    <things-profile-dialog
+      name="elidom"
+      email="elidom@example.com"
+      role-list-url ="roles"
+      role-request-url ="request_role"
       img="../../images/profile.png">
-    </things-profile-dialog>
 
 @demo demo/index.html
 -->
 
 <dom-module id="things-profile-dialog">
-  <template>
-    <style>
-      :host {
-        display: inline-flex;
-        @apply(--things-profile-dialog);
-      }
-      paper-card {
-        min-width:250px;
-      }
-      paper-card::shadow .header {
-        background-color:var(--paper-blue-grey-400);
-      }
-      paper-card::shadow .title-text {
-        padding:15px 0 70px 0 !important;
-        color:#fff !important;
-        text-align:center;
-      }
-      img {
-        @apply(--things-profile-img);
-      }
-      .close {
-        background-color:transparent;
-        position:absolute;
-        opacity:.5;
-        top:5px;
-        right:5px;
-        border:none;
-        padding:0;
-        color:#fff;
-      }
-      .logout {
-        @apply(--things-profile-logout);
-      }
-      .logout iron-icon {
-        @apply(--things-icon);
-      }
-      .user {
-        margin-top:60px;
-        color:var(--things-primary-text-color);
-        text-align:center;
-        font-size:13px;
-      }
-      .user strong {
-        display:block;
-        font-size:15px;
-      }
-      paper-button {
-        @apply(--things-button-important);
-        @apply(--things-default-margin);
-        width:89%;
-      }
-      button:focus {
-        outline:none
-      }
-    </style>
+    <template>
+        <style>
+            :host {
+                display: inline-flex;
+                @apply(--things-profile-dialog);
+            }
 
-    <paper-card heading="X-MES">
-      <button on-tap="closeProfile" class="close"><iron-icon icon="icons:cancel"></iron-icon></button>
-      <img src="[[img]]">
-      <button on-tap="logout" class="logout"><iron-icon icon="icons:exit-to-app"></iron-icon></button>
+            paper-card {
+                min-width: 250px;
+            }
 
-      <div id="info">
-        <content>
-          <div class="user">
-            <strong>[[globals.user.name]]</strong>
-            [[globals.user.email]]
-          </div>
+            paper-card::shadow .header {
+                background-color: var(--paper-blue-grey-400);
+            }
 
-          <paper-button 
-            raised color="green"
-            on-click="showChangePasswordScreen">
-            <things-i18n-msg msgid="button.change_password" auto>Change Password</things-i18n-msg>
-          </paper-button>
+            paper-card::shadow .title-text {
+                padding: 15px 0 70px 0 !important;
+                color: #fff !important;
+                text-align: center;
+            }
 
-          <things-logout 
-            id="logout" 
-            action="logout"
-            logout-path="logout"
-            icon="icons:exit-to-app"
-            hidden>
-          </things-logout>
-        </content>
-      </div>
-    </paper-card>
-  </template>
+            img {
+                @apply(--things-profile-img);
+            }
 
-  <script>
-    Polymer({
-      is: 'things-profile-dialog',
+            .close {
+                background-color: transparent;
+                position: absolute;
+                opacity: .5;
+                top: 5px;
+                right: 5px;
+                border: none;
+                padding: 0;
+                color: #fff;
+            }
 
-      properties : {
-        img : {
-          type: String,
-          value: '../../images/profile.png'
-        }
-      },
+            .logout {
+                @apply(--things-profile-logout);
+            }
 
-      behaviors: [ 
-        Things.GlobalBehavior,
-        Polymer.PaperDialogBehavior 
-      ],
+            .logout iron-icon {
+                @apply(--things-icon);
+            }
 
-      /**
-       * Logout
-       */
-      logout: function(event) {
-         this.$.logout.logout(); 
-         this.closeProfile();
-      },
+            .user {
+                margin-top: 60px;
+                color: var(--things-primary-text-color);
+                text-align: center;
+                font-size: 13px;
+            }
 
-      /**
-       * Show Change Password Screen
-       */
-      showChangePasswordScreen: function(event) {
-        var element = document.createElement('things-change-password');
-        element.title = 'Change Password';
-        var dialog = app.$['common-full-dialog'];
-        element.actionUrl = 'users/change_pass/' + this.globals.user.id;
-        element.method = 'POST';
-        element.currentUserInfo = this.globals.user;
+            .user strong {
+                display: block;
+                font-size: 15px;
+            }
 
-        var me = this;
-        element.addEventListener("things-change-password-success", function(event) {
-          dialog.closeBasicDialog();
-          me.logout();
+            paper-button {
+                @apply(--things-button-important);
+                @apply(--things-default-margin);
+                width: 89%;
+            }
+
+            things-resource-combo {
+                @apply(--things-default-margin);
+                width: 89%;
+            }
+
+            button:focus {
+                outline: none
+            }
+
+        </style>
+        <things-i18n-msg msgid="button.role-list" msg="{{lRoles}}" auto hidden>Roles</things-i18n-msg>
+        <things-i18n-msg msgid="text.request-role-success" msg="{{tRequestRoleSucess}}" auto hidden>Role requested and admin will check it at e-mail.</things-i18n-msg>
+        <paper-card heading="[[heading]]">
+            <button on-tap="closeProfile" class="close">
+                <iron-icon icon="icons:cancel"></iron-icon>
+            </button>
+            <img src="[[img]]">
+            <button on-tap="logout" class="logout">
+                <iron-icon icon="icons:exit-to-app"></iron-icon>
+            </button>
+
+            <div id="info">
+                <content>
+                    <div class="user">
+                        <strong>[[globals.user.name]]</strong> [[globals.user.email]]
+                    </div>
+                    <paper-button raised color="green" on-click="showChangePasswordScreen">
+                        <things-i18n-msg msgid="button.change_password" auto>Change Password</things-i18n-msg>
+                    </paper-button>
+
+                    <things-logout id="logout" action="logout" logout-path="logout" icon="icons:exit-to-app" hidden>
+                    </things-logout>
+                </content>
+                <div name="role-request" hidden="{{!requestRoleAble}}">
+                    <things-resource-combo required label="[[lRoles]]" resource-url="[[roleListUrl]]" items-prop="items" value="{{role}}" value-path="id"></things-resource-combo>
+                    <things-ajax id="requestRole" resource-url="[[roleRequestUrl]]" method="POST" content-type="application/json" on-things-ajax-response="_handleSuccess">
+                    </things-ajax>
+                    <paper-button raised color="green" on-tap="onRequestRoleTap">
+                        <things-i18n-msg msgid="button.request_role" auto>request role</things-i18n-msg>
+                    </paper-button>
+                </div>
+            </div>
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'things-profile-dialog',
+
+            properties: {
+                img: {
+                    type: String,
+                    value: '../../images/profile.png'
+                },
+                system: {
+                    type: String,
+                    value: 'system-name'
+                },
+                heading: {
+                    computed: 'computeSystemName(system)'
+                },
+                role: {
+                    type: Object
+                },
+
+                roleListUrl: {
+                    type: String
+                },
+
+                roleRequestUrl: {
+                    type: String
+                },
+                requestRoleAble: {
+                    computed: 'computeRequestRoleAble(globals.user)',
+                    value: true
+                }
+            },
+
+            behaviors: [
+                Things.GlobalBehavior,
+                Polymer.PaperDialogBehavior
+            ],
+            /**
+             * Logout
+             */
+            logout: function(event) {
+                this.$.logout.logout();
+                this.closeProfile();
+            },
+
+            /**
+             * Show Change Password Screen
+             */
+            showChangePasswordScreen: function(event) {
+                var element = document.createElement('things-change-password');
+                element.title = 'Change Password';
+                var dialog = app.$['common-full-dialog'];
+                element.actionUrl = 'users/change_pass/' + this.globals.user.id;
+                element.method = 'POST';
+                element.currentUserInfo = this.globals.user;
+
+                var me = this;
+                element.addEventListener("things-change-password-success", function(event) {
+                    dialog.closeBasicDialog();
+                    me.logout();
+                });
+
+                element.addEventListener("things-change-password-failure", function(event) {
+                    var response = event.detail.request.xhr.response;
+                    this.openResponseError(response);
+                });
+
+                dialog.openBasicDialog(element, true, null);
+            },
+
+            /**
+             * Close Profile Screen
+             */
+            closeProfile: function(event) {
+                this.close();
+            },
+
+            /**
+             * compute system name
+             */
+            computeSystemName: function(system) {
+                return system.toUpperCase()
+            },
+
+            /**
+             * 현재 갖고 있는 Role을 리턴한다.
+             */
+            computeRoleInfo: function(roles) {
+                if (!roles || roles.length <= 0) return;
+
+                return roles[0].name;
+            },
+            /**
+             * Role Request
+             */
+            onRequestRoleTap: function(e) {
+                this.$['requestRole'].body = {
+                    "user_id": this.globals.user.id,
+                    "role_id": this.role
+                };
+
+                this.$['requestRole'].generateRequest();
+            },
+            /*
+             *computeRequestRoleAble
+             */
+            computeRequestRoleAble: function(user) {
+                if (user && user.roles) {
+                    this.role = user.roles.name;
+                } else {
+                    return true;
+                }
+                return roles.length > 0
+            },
+            /**
+             * when role request success update user and roles
+             */
+            _handleSuccess: function(e) {
+                this.fire('iron-signal', {
+                    name: 'success',
+                    data: this.tRequestRoleSucess
+                });
+            }
         });
 
-        element.addEventListener("things-change-password-failure", function(event) {
-          var response = event.detail.request.xhr.response;
-          this.openResponseError(response);
-        });
-
-        dialog.openBasicDialog(element, true, null);
-      },
-
-      /**
-       * Close Profile Screen
-       */
-      closeProfile: function(event) {
-        this.close();
-      }
-
-    });
-  </script>
+    </script>
 
 </dom-module>
