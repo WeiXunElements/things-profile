@@ -51,8 +51,8 @@
             .close {
                 background-color: transparent;
                 position: absolute;
-                opacity: .5;
-                top: 5px;
+                opacity: .7;
+                top: 10px;
                 right: 5px;
                 border: none;
                 padding: 0;
@@ -65,6 +65,8 @@
 
             .logout iron-icon {
                 @apply(--things-icon);
+                margin-top:-1px;
+                margin-right:0px;
             }
 
             .user {
@@ -92,6 +94,36 @@
 
             button:focus {
                 outline: none
+            }
+
+            div[name=role-request]{
+              border-top:1px dotted #ccc;
+              margin:0px 10px;padding:9px 0 0 0;
+              max-width:320px;
+            }
+            div[name=role-request] paper-button{
+              @apply(--things-button);
+              float:right;
+              width:105px;
+              margin:0px 12px 0 0;
+              padding:5px 4px;
+            }
+            things-resource-combo::shadow iron-icon{
+              @apply(--things-button);
+              padding:4px !important;
+              margin-bottom:4px;
+              -webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;
+            }
+            things-resource-combo{
+              margin:0;
+              float:left;
+              width:200px;
+            }
+            things-resource-combo::shadow label{
+              width:50px
+            }
+            things-resource-combo::shadow input{
+              width:100px
             }
 
         </style>
