@@ -23,7 +23,6 @@
 				@apply(--things-small-icon);
 				margin-right: 3px;
 			}
-
 		</style>
 
 		<things-i18n-msg msgid="button.profile" msg="{{labelProfile}}" auto hidden>profile</things-i18n-msg>
@@ -39,16 +38,31 @@
 			is: 'things-profile',
 
 			properties: {
+				/**
+				 * 버튼 활성화 여부 
+				 */
 				buttonEnable: {
 					type: Boolean,
 					computed: '_isSignedIn(globals.user.name)'
 				},
+
+				/**
+				 * 시스템 명 
+				 */
 				system: {
 					type: String
 				},
+
+				/**
+				 * 권한 요청 URL
+				 */
 				roleRequestUrl: {
 					type: String
 				},
+
+				/**
+				 * 역할 리스트 조회 URL
+				 */
 				roleListUrl: {
 					type: String
 				}
@@ -65,6 +79,9 @@
 				this.$.dialog.open()
 			},
 
+			/**
+			 * 로그인 된 상황인 지 체크 
+			 */
 			_isSignedIn: function(name) {
 				return name ? false : true;
 			}
