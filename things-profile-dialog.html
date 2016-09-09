@@ -242,7 +242,8 @@
          * 권한 신청 URL
          */
         roleRequestUrl: {
-          type: String
+          type: String,
+          value: 'request_auths/account/auth/request'
         }
       },
 
@@ -313,6 +314,7 @@
           text: Things.DataGlobal.t('text.Sure to X', {x : Things.DataGlobal.t('button.request_role')}),
           cancelButtonText: Things.DataGlobal.t('button.cancel'),
           showCancelButton: true
+          
         }, function() {
           me.$['requestRole'].body = { user_id: me.globals.user.id, role_id: me.roleId };
           me.$['requestRole'].generateRequest();
