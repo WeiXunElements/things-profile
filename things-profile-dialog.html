@@ -268,14 +268,13 @@
         var element = document.createElement('things-change-password');
         element.title = Things.DataGlobal.t('button.change_password');
 
-        var dialog = app.$['common-full-dialog'];
         element.actionUrl = 'users/change_pass/' + this.globals.user.id;
         element.method = 'POST';
         element.currentUserInfo = this.globals.user;
         var me = this;
 
-        element.addEventListener("things-change-password-success", function(event) {
-          dialog.closeBasicDialog();
+        element.addEventListener("things-change-password-success", function() {
+          this.fire('things-common-dialog-close');
           me.logout();
         });
 
@@ -284,7 +283,14 @@
           this.openResponseError(response);
         });
 
-        dialog.openBasicDialog(element, true, null);
+        var event = {
+          view: element,
+          modal: true,
+          openCallback: null
+        };
+
+        this.fire('things-open-popup-view', event);
+        // dialog.openBasicDialog(element, true, null);
       },
 
       /**
