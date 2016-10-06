@@ -274,7 +274,7 @@
         var me = this;
 
         element.addEventListener("things-change-password-success", function() {
-          this.fire('things-common-dialog-close');
+          this.fire('things-dialog-close');
           me.logout();
         });
 
