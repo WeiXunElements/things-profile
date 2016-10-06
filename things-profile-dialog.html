@@ -156,7 +156,7 @@
             <strong>[[globals.user.name]]</strong> [[globals.user.email]]
           </div>
           
-          <paper-button raised color="green" on-click="showChangePasswordScreen">
+          <paper-button raised color="green" on-tap="showChangePasswordScreen">
             <things-i18n-msg msgid="button.change_password" auto>Change Password</things-i18n-msg>
           </paper-button>
 
@@ -290,7 +290,6 @@
         };
 
         this.fire('things-open-popup-view', event);
-        // dialog.openBasicDialog(element, true, null);
       },
 
       /**
