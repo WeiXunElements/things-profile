@@ -39,6 +39,11 @@
 													 role-list-url="[[roleListUrl]]" 
 													 role-request-url="[[roleRequestUrl]]" 
 													 hidden="[[buttonEnable]]"></things-profile-dialog>
+
+    <iron-localstorage name="setting.locale"
+                       value="{{globals.locale}}"
+                       on-iron-localstorage-load-empty="onLocaleEmpty">
+    </iron-localstorage>													 
 	</template>
 
 	<script>
@@ -93,7 +98,11 @@
 			 */
 			_isSignedIn: function(name) {
 				return name ? false : true;
-			}
+			},
+
+      onLocaleEmpty: function() {
+        this.set('globals.locale', this.defaultLocale);
+      },			
 		});
 
 	</script>

@@ -8,6 +8,7 @@
 <link rel="import" href="../things-msg-box-behavior/things-msg-box-behavior.html">
 <link rel="import" href="../things-auth/things-change-password.html">
 <link rel="import" href="../things-resource-combo/things-code-combo.html">
+<link rel="import" href="../things-resource-combo/things-locale-combo.html">
 <link rel="import" href="../things-resource-combo/things-resource-combo.html">
 
 <!--
@@ -96,6 +97,11 @@
         width: 89%;
       }
 
+      things-locale-combo {
+        @apply(--things-default-margin);
+        width: 89%;
+      }
+
       button:focus {
         outline: none
       }
@@ -121,7 +127,20 @@
         -webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;
       }
 
+      things-locale-combo::shadow iron-icon {
+        @apply(--things-button);
+        padding:4px !important;
+        margin-bottom:4px;
+        -webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;
+      }
+
       things-resource-combo {
+        margin:0;
+        float:left;
+        width:200px;
+      }
+
+      things-locale-combo {
         margin:0;
         float:left;
         width:200px;
@@ -131,8 +150,16 @@
         width:50px
       }
 
+      things-locale-combo::shadow label {
+        width:50px;
+      }
+
       things-resource-combo::shadow input {
         width:100px
+      }
+
+      things-locale-combo::shadow input {
+        width:100px;
       }
     </style>
 
@@ -170,6 +197,14 @@
         </content>
 
         <div name="role-request">
+          <!-- locale selector -->
+          <things-locale-combo 
+            id="locale-selector" 
+            storage-name="setting.locale" 
+            default-locale="{{defaultLocale}}"
+            selected-locale="{{globals.locale}}">
+          </things-locale-combo> 
+
           <things-resource-combo 
             required 
             label="[[lRoles]]" 
@@ -229,6 +264,25 @@
         roleId: {
           type: String,
           value: ''
+        },
+
+        /**
+         * 기본 locale
+         */
+        defaultLocale: {
+          type: String,
+          value: function() {
+            var language = navigator.language;
+            if(language.indexOf('ko') == 0) {
+              return 'ko-KR';
+            } else if (language.indexOf('en') == 0) {
+              return 'en-US';
+            } else if (language.indexOf('zh') == 0) {
+              return 'zh-CN';
+            } else {
+              return 'en-US';
+            }
+          }
         },
 
         /**
