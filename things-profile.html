@@ -40,10 +40,10 @@
 													 role-request-url="[[roleRequestUrl]]" 
 													 hidden="[[buttonEnable]]"></things-profile-dialog>
 
-    <iron-localstorage name="setting.locale"
-                       value="{{globals.locale}}"
-                       on-iron-localstorage-load-empty="onLocaleEmpty">
-    </iron-localstorage>													 
+		<iron-localstorage name="setting.locale"
+											 value="{{globals.locale}}"
+											 on-iron-localstorage-load-empty="onLocaleEmpty">
+		</iron-localstorage>
 	</template>
 
 	<script>
@@ -100,10 +100,12 @@
 				return name ? false : true;
 			},
 
-      onLocaleEmpty: function() {
-        this.set('globals.locale', this.defaultLocale);
-      },			
+			/**
+			 * Locale 설정이 안 된 경우 - 기본 로케일로 설정 
+			 */
+			onLocaleEmpty: function() {
+				this.set('globals.locale', this.defaultLocale);
+			}
 		});
-
 	</script>
 </dom-module>

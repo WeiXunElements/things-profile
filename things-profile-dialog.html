@@ -4,9 +4,9 @@
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-behavior.html">
 
+<link rel="import" href="../things-auth/things-change-password.html">
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
 <link rel="import" href="../things-msg-box-behavior/things-msg-box-behavior.html">
-<link rel="import" href="../things-auth/things-change-password.html">
 <link rel="import" href="../things-resource-combo/things-code-combo.html">
 <link rel="import" href="../things-resource-combo/things-locale-combo.html">
 <link rel="import" href="../things-resource-combo/things-resource-combo.html">
@@ -205,26 +205,28 @@
             selected-locale="{{globals.locale}}">
           </things-locale-combo> 
 
-          <things-resource-combo 
-            required 
-            label="[[lRoles]]" 
-            resource-url="[[roleListUrl]]" 
-            items-prop="items" 
-            value="{{roleId}}" 
-            value-path="id">
-          </things-resource-combo>
+          <template is="dom-if" if="[[showRequestRole]]">
+            <things-resource-combo 
+              required 
+              label="[[lRoles]]" 
+              resource-url="[[roleListUrl]]" 
+              items-prop="items" 
+              value="{{roleId}}" 
+              value-path="id">
+            </things-resource-combo>
 
-          <things-ajax 
-            id="requestRole" 
-            resource-url="[[roleRequestUrl]]" 
-            method="POST" 
-            content-type="application/json" 
-            on-things-ajax-response="_handleSuccess">
-          </things-ajax>
+            <things-ajax 
+              id="requestRole" 
+              resource-url="[[roleRequestUrl]]" 
+              method="POST" 
+              content-type="application/json" 
+              on-things-ajax-response="_handleSuccess">
+            </things-ajax>
 
-          <paper-button raised color="green" on-tap="onRequestRoleTap">
-            <things-i18n-msg msgid="label.request" auto>request</things-i18n-msg>
-          </paper-button>
+            <paper-button raised color="green" on-tap="onRequestRoleTap">
+              <things-i18n-msg msgid="label.request" auto>request</things-i18n-msg>
+            </paper-button>
+          </template>
         </div>
       </div>
     </paper-card>
@@ -235,6 +237,14 @@
       is: 'things-profile-dialog',
 
       properties: {
+        /**
+         * 역할 신청을 보여줄 지 여부 
+         */
+        showRequestRole: {
+          type: Boolean,
+          value: false
+        },
+
         /**
          * 프로파일 이미지 
          */
@@ -273,6 +283,7 @@
           type: String,
           value: function() {
             var language = navigator.language;
+
             if(language.indexOf('ko') == 0) {
               return 'ko-KR';
             } else if (language.indexOf('en') == 0) {
