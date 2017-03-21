@@ -2,6 +2,8 @@
 
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-behavior.html">
 
 <link rel="import" href="../things-auth/things-change-password.html">
@@ -10,7 +12,8 @@
 <link rel="import" href="../things-resource-combo/things-code-combo.html">
 <link rel="import" href="../things-resource-combo/things-locale-combo.html">
 <link rel="import" href="../things-resource-combo/things-resource-combo.html">
-
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
+<link rel="import" href="../things-ajax/things-ajax.html">
 <!--
   `<things-profile-dialog>` 사용자 프로파일
 
@@ -26,6 +29,7 @@
 
 @demo demo/index.html
 -->
+
 
 <dom-module id="things-profile-dialog">
   <template>
@@ -182,44 +186,44 @@
           <div class="user">
             <strong>[[globals.user.name]]</strong> [[globals.user.email]]
           </div>
-          
+
           <paper-button raised color="green" on-tap="showChangePasswordScreen">
             <things-i18n-msg msgid="button.change_password" auto>Change Password</things-i18n-msg>
           </paper-button>
 
-          <things-logout 
-            id="logout" 
-            action="logout" 
-            logout-path="logout" 
-            icon="icons:exit-to-app" 
+          <things-logout
+            id="logout"
+            action="logout"
+            logout-path="logout"
+            icon="icons:exit-to-app"
             hidden>
           </things-logout>
         </content>
 
         <div name="role-request">
           <!-- locale selector -->
-          <things-locale-combo 
-            id="locale-selector" 
-            storage-name="setting.locale" 
+          <things-locale-combo
+            id="locale-selector"
+            storage-name="setting.locale"
             default-locale="{{defaultLocale}}"
             selected-locale="{{globals.locale}}">
-          </things-locale-combo> 
+          </things-locale-combo>
 
           <template is="dom-if" if="[[showRequestRole]]">
-            <things-resource-combo 
-              required 
-              label="[[lRoles]]" 
-              resource-url="[[roleListUrl]]" 
-              items-prop="items" 
-              value="{{roleId}}" 
+            <things-resource-combo
+              required
+              label="[[lRoles]]"
+              resource-url="[[roleListUrl]]"
+              items-prop="items"
+              value="{{roleId}}"
               value-path="id">
             </things-resource-combo>
 
-            <things-ajax 
-              id="requestRole" 
-              resource-url="[[roleRequestUrl]]" 
-              method="POST" 
-              content-type="application/json" 
+            <things-ajax
+              id="requestRole"
+              resource-url="[[roleRequestUrl]]"
+              method="POST"
+              content-type="application/json"
               on-things-ajax-response="_handleSuccess">
             </things-ajax>
 
@@ -238,7 +242,7 @@
 
       properties: {
         /**
-         * 역할 신청을 보여줄 지 여부 
+         * 역할 신청을 보여줄 지 여부
          */
         showRequestRole: {
           type: Boolean,
@@ -246,21 +250,21 @@
         },
 
         /**
-         * 프로파일 이미지 
+         * 프로파일 이미지
          */
         img: {
           type: String,
           value: '../../images/profile.png'
         },
-        
+
         /**
-         * 시스템 명 
+         * 시스템 명
          */
         system: {
           type: String,
           value: 'system-name'
         },
-        
+
         /**
          * Card Heading Title
          */
@@ -320,6 +324,7 @@
 
       /**
        * Logout
+       * @param {event} event logout event 입력
        */
       logout: function(event) {
         this.$.logout.logout();
@@ -328,6 +333,7 @@
 
       /**
        * Show Change Password Screen
+       * @param {event} event 비밀번호변경 Screen 이벤트 입력
        */
       showChangePasswordScreen: function(event) {
         var element = document.createElement('things-change-password');
@@ -358,7 +364,8 @@
       },
 
       /**
-       * Close Profile Screen
+       * Profile Screen 닫음
+       * @param {event} event Profile close event 입력
        */
       closeProfile: function(event) {
         this.close();
@@ -366,6 +373,8 @@
 
       /**
        * 시스템 명
+       * @param {String} system 시스템 명 입력
+       * @return {String} 시스템 명 대문자로 바꿈
        */
       computeSystemName: function(system) {
         return system.toUpperCase()
@@ -386,7 +395,7 @@
           showCancelButton: true,
           allowEscapeKey: false,
           closeOnConfirm: false
-          
+
         }, function() {
           me.$['requestRole'].body = { user_id: me.globals.user.id, role_id: me.roleId };
           me.$['requestRole'].generateRequest();
@@ -394,7 +403,7 @@
       },
 
       /**
-       * When role request success update user and roles
+       *  role request 해서 user/roles이 업데이트 성공할때 호출함수
        */
       _handleSuccess: function(e) {
         var me = this;

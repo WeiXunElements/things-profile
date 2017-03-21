@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at https://github.com/ThingsEleme
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
 
   <link rel="import" href="../things-profile.html">
-
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
   <style is="custom-style">
 
     .output {
@@ -61,23 +61,12 @@ subject to an additional IP rights grant found at https://github.com/ThingsEleme
 <body unresolved>
   <demo-snippet class="centered-demo">
     <template>
-      <sample-profile></sample-profile>
 
-      <dom-module id="sample-profile">
-        <template>
-          <things-profile 
-            name="elidom" 
-            email="elidom@example.com" 
-            img="../../../images/profile.png">
-          </things-profile>
-        </template>
 
-        <script>
-          Polymer({
-            is: "sample-profile"
-          });
-        </script>
-      </dom-module>
+
+      <things-profile></things-profile>
+
+
     </template>
   </demo-snippet>
 
