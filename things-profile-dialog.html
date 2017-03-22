@@ -15,6 +15,7 @@
 <link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
 <link rel="import" href="../things-ajax/things-ajax.html">
 <!--
+## things-profile-dialog
   `<things-profile-dialog>` 사용자 프로파일
 
   Example
@@ -322,7 +323,7 @@
         Things.MsgBoxBehavior,
       ],
 
-      /**
+      /********
        * Logout
        * @param {event} event logout event 입력
        */
@@ -331,7 +332,7 @@
         this.closeProfile();
       },
 
-      /**
+      /********
        * Show Change Password Screen
        * @param {event} event 비밀번호변경 Screen 이벤트 입력
        */
@@ -363,15 +364,17 @@
         this.fire('things-open-popup-view', event);
       },
 
-      /**
+      /********
        * Profile Screen 닫음
+       *
        * @param {event} event Profile close event 입력
+       *
        */
       closeProfile: function(event) {
         this.close();
       },
 
-      /**
+      /********
        * 시스템 명
        * @param {String} system 시스템 명 입력
        * @return {String} 시스템 명 대문자로 바꿈
@@ -380,7 +383,7 @@
         return system.toUpperCase()
       },
 
-      /**
+      /********
        * Role Request
        */
       onRequestRoleTap: function(e) {
