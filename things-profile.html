@@ -62,6 +62,8 @@
 			properties: {
 				/**
 				 * 버튼 활성화 여부
+				 * *******
+				 * @type {String}
 				 */
 				buttonEnable: {
 					type: Boolean,
@@ -70,6 +72,8 @@
 
 				/**
 				 * 시스템 명
+				 * *******
+				 * @type {String}
 				 */
 				system: {
 					type: String
@@ -77,6 +81,8 @@
 
 				/**
 				 * 권한 요청 URL
+				 * *******
+				 * @type {String}
 				 */
 				roleRequestUrl: {
 					type: String,
@@ -85,6 +91,8 @@
 
 				/**
 				 * 역할 리스트 조회 URL
+				 * *******
+				 * @type {String}
 				 */
 				roleListUrl: {
 					type: String
@@ -97,6 +105,7 @@
 
 			/**
 			 * Profile Dialog를 오픈한다.
+			 * ******
 			 */
 			open: function() {
 				this.$.dialog.open()
@@ -112,6 +121,7 @@
 
 			/**
 			 * Locale 설정이 안 된 경우 - 기본 로케일로 설정
+			 * ******
 			 */
 			onLocaleEmpty: function() {
 				this.set('globals.locale', this.defaultLocale);

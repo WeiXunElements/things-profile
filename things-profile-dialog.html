@@ -244,6 +244,8 @@
       properties: {
         /**
          * 역할 신청을 보여줄 지 여부
+         * *******
+         * @type {Boolean}
          */
         showRequestRole: {
           type: Boolean,
@@ -252,6 +254,8 @@
 
         /**
          * 프로파일 이미지
+         * *******
+         * @type {String}
          */
         img: {
           type: String,
@@ -260,6 +264,8 @@
 
         /**
          * 시스템 명
+         * *******
+         * @type {String}
          */
         system: {
           type: String,
@@ -268,6 +274,7 @@
 
         /**
          * Card Heading Title
+         ******
          */
         heading: {
           computed: 'computeSystemName(system)'
@@ -275,6 +282,8 @@
 
         /**
          * 권한 신청시 선택한 Role
+         * *******
+         * @type {String}
          */
         roleId: {
           type: String,
@@ -283,6 +292,8 @@
 
         /**
          * 기본 locale
+         * *******
+         * @type {String}
          */
         defaultLocale: {
           type: String,
@@ -303,6 +314,8 @@
 
         /**
          * 권한 신청을 위해 조회할 Role List URL
+         * *******
+         * @type {String}
          */
         roleListUrl: {
           type: String
@@ -310,6 +323,8 @@
 
         /**
          * 권한 신청 URL
+         * *******
+         * @type {String}
          */
         roleRequestUrl: {
           type: String,
@@ -323,17 +338,19 @@
         Things.MsgBoxBehavior,
       ],
 
-      /********
+      /**
        * Logout
        * @param {event} event logout event 입력
+       * ******
        */
       logout: function(event) {
         this.$.logout.logout();
         this.closeProfile();
       },
 
-      /********
+      /**
        * Show Change Password Screen
+       * ******
        * @param {event} event 비밀번호변경 Screen 이벤트 입력
        */
       showChangePasswordScreen: function(event) {
@@ -364,9 +381,9 @@
         this.fire('things-open-popup-view', event);
       },
 
-      /********
+      /**
        * Profile Screen 닫음
-       *
+       *******
        * @param {event} event Profile close event 입력
        *
        */
@@ -374,8 +391,9 @@
         this.close();
       },
 
-      /********
+      /**
        * 시스템 명
+       * ******
        * @param {String} system 시스템 명 입력
        * @return {String} 시스템 명 대문자로 바꿈
        */
@@ -383,8 +401,9 @@
         return system.toUpperCase()
       },
 
-      /********
+      /**
        * Role Request
+       * *****
        */
       onRequestRoleTap: function(e) {
         if(!this.roleId) return;
