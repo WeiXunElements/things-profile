@@ -1,19 +1,20 @@
 <link rel="import" href="../polymer/polymer.html">
 
-<link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-behavior.html">
 
+<link rel="import" href="../things-ajax/things-ajax.html">
 <link rel="import" href="../things-auth/things-change-password.html">
 <link rel="import" href="../things-global-behavior/things-global-behavior.html">
+<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
 <link rel="import" href="../things-msg-box-behavior/things-msg-box-behavior.html">
 <link rel="import" href="../things-resource-combo/things-code-combo.html">
 <link rel="import" href="../things-resource-combo/things-locale-combo.html">
 <link rel="import" href="../things-resource-combo/things-resource-combo.html">
-<link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
-<link rel="import" href="../things-ajax/things-ajax.html">
+
 <!--
 ## things-profile-dialog
   `<things-profile-dialog>` 사용자 프로파일
@@ -30,7 +31,6 @@
 
 @demo demo/index.html
 -->
-
 
 <dom-module id="things-profile-dialog">
   <template>
@@ -168,8 +168,17 @@
       }
     </style>
 
-    <things-i18n-msg msgid="label.role" msg="{{lRoles}}" auto hidden>Roles</things-i18n-msg>
-    <things-i18n-msg msgid="text.request-role-success" msg="{{tRequestRoleSucess}}" auto hidden>Role requested and admin will check it at e-mail.</things-i18n-msg>
+    <things-i18n-msg 
+      msgid="label.role" 
+      msg="{{lRoles}}" 
+      auto 
+      hidden>Roles</things-i18n-msg>
+
+    <things-i18n-msg 
+      msgid="text.request-role-success" 
+      msg="{{tRequestRoleSucess}}" 
+      auto 
+      hidden>Role requested and admin will check it at e-mail.</things-i18n-msg>
 
     <paper-card heading="[[heading]]">
       <button on-tap="closeProfile" class="close">
@@ -203,12 +212,14 @@
 
         <div name="role-request">
           <!-- locale selector -->
-          <things-locale-combo
-            id="locale-selector"
-            storage-name="setting.locale"
-            default-locale="{{defaultLocale}}"
-            selected-locale="{{globals.locale}}">
-          </things-locale-combo>
+          <template is="dom-if" if="[[showLocale]]">
+            <things-locale-combo
+              id="locale-selector"
+              storage-name="setting.locale"
+              default-locale="{{defaultLocale}}"
+              selected-locale="{{globals.locale}}">
+            </things-locale-combo>
+          </template>
 
           <template is="dom-if" if="[[showRequestRole]]">
             <things-resource-combo
@@ -243,11 +254,21 @@
 
       properties: {
         /**
-         * 역할 신청을 보여줄 지 여부
+         * 역할 신청을 표시할 지 여부
          * *******
          * @type {Boolean}
          */
         showRequestRole: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * 언어 설정을 표시할 지 여부
+         * *******
+         * @type {Boolean}
+         */
+        showLocale: {
           type: Boolean,
           value: false
         },
