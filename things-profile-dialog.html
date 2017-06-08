@@ -212,14 +212,11 @@
 
         <div name="role-request">
           <!-- locale selector -->
-          <template is="dom-if" if="[[showLocale]]">
-            <things-locale-combo
-              id="locale-selector"
-              storage-name="setting.locale"
-              default-locale="{{defaultLocale}}"
-              selected-locale="{{globals.locale}}">
-            </things-locale-combo>
-          </template>
+          <things-locale-combo
+            id="locale-selector"
+            default-locale="[[defaultLocale]]"
+            hidden="[[localeHidden]]">
+          </things-locale-combo>
 
           <template is="dom-if" if="[[showRequestRole]]">
             <things-resource-combo
@@ -268,7 +265,7 @@
          * *******
          * @type {Boolean}
          */
-        showLocale: {
+        localeHidden: {
           type: Boolean,
           value: false
         },
@@ -317,20 +314,7 @@
          * @type {String}
          */
         defaultLocale: {
-          type: String,
-          value: function() {
-            var language = navigator.language;
-
-            if(language.indexOf('ko') == 0) {
-              return 'ko-KR';
-            } else if (language.indexOf('en') == 0) {
-              return 'en-US';
-            } else if (language.indexOf('zh') == 0) {
-              return 'zh-CN';
-            } else {
-              return 'en-US';
-            }
-          }
+          type: String
         },
 
         /**
