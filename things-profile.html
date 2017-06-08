@@ -11,11 +11,11 @@
 
 <!--
 ## things-profile
-  `<things-profile-dialog>`  프로파일 컴포넌트
+	`<things-profile-dialog>`  프로파일 컴포넌트
 
-  Example
+	Example
 
-      <things-profile></things-profile>
+			<things-profile></things-profile>
 
 @demo demo/index.html
 -->
@@ -49,13 +49,9 @@
 			system="[[system]]"
 			role-list-url="[[roleListUrl]]"
 			role-request-url="[[roleRequestUrl]]"
-			show-locale="[[showLocale]]"></things-profile-dialog>
+			default-locale ="[[defaultLocale]]"
+			locale-hidden="[[localeHidden]]"></things-profile-dialog>
 
-		<iron-localstorage 
-			name="setting.locale"
-			value="{{globals.locale}}"
-			on-iron-localstorage-load-empty="onLocaleEmpty">
-		</iron-localstorage>
 	</template>
 
 	<script>
@@ -100,13 +96,20 @@
 				roleListUrl: {
 					type: String
 				},
-
+				/**
+				 * 기본 locale
+				 * *******
+				 * @type {String}
+				 */
+				defaultLocale: {
+					type: String
+				},
 				/**
 				 * 로케일 설정을 숨기기 위한 옵션 
 				 */
-				showLocale: {
+				localeHidden: {
 					type: Boolean,
-					value: true
+					value: false
 				}
 			},
 
@@ -128,14 +131,6 @@
 			 */
 			_isSignedIn: function(name) {
 				return name ? false : true;
-			},
-
-			/**
-			 * Locale 설정이 안 된 경우 - 기본 로케일로 설정
-			 * ******
-			 */
-			onLocaleEmpty: function() {
-				this.set('globals.locale', this.defaultLocale);
 			}
 		});
 	</script>
