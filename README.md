@@ -1,6 +1,6 @@
 # things-profile-dialog
 
-## 사용자 프로파일정보를 보여주는 다이어로그
+## This is a dialog showing user profile information.
 
 Example
 ```html
@@ -15,7 +15,8 @@ Example
 
 # things-profile
 
-## 사용자 프로파일 다이어로그를 보여주고 싶을때 사용하는 Icon button
+## This is an Icon Button that you use to display the user profile dialog.
+
 Example
 ```html
   <things-profile system="Hassed"
@@ -27,8 +28,7 @@ Example
 
 ## Dependencies
 
-Element dependencies are managed via [Bower](http://bower.io/). You can
-install that via:
+Element dependencies are managed via [Bower](http://bower.io/). You can install that via:
 
     npm install -g bower
 
