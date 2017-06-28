@@ -167,6 +167,14 @@
         width:100px;
       }
     </style>
+    
+    <things-ajax
+      id="requestRole"
+      resource-url="[[roleRequestUrl]]"
+      method="POST"
+      content-type="application/json"
+      on-things-ajax-response="_handleSuccess">
+    </things-ajax>    
 
     <things-i18n-msg 
       msgid="label.role" 
@@ -227,14 +235,6 @@
               value="{{roleId}}"
               value-path="id">
             </things-resource-combo>
-
-            <things-ajax
-              id="requestRole"
-              resource-url="[[roleRequestUrl]]"
-              method="POST"
-              content-type="application/json"
-              on-things-ajax-response="_handleSuccess">
-            </things-ajax>
 
             <paper-button raised color="green" on-tap="onRequestRoleTap">
               <things-i18n-msg msgid="label.request" auto>request</things-i18n-msg>
