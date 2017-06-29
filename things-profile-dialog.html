@@ -45,7 +45,7 @@ Copyright © HatioLab Inc. All rights reserved.
       }
 
       paper-card {
-        min-width: 250px;
+        min-width: 280px;
       }
 
       paper-card::shadow .header {
@@ -108,7 +108,7 @@ Copyright © HatioLab Inc. All rights reserved.
 
       things-locale-combo {
         @apply(--things-default-margin);
-        width: 89%;
+        width:100% !important;
       }
 
       button:focus {
@@ -152,7 +152,6 @@ Copyright © HatioLab Inc. All rights reserved.
       things-locale-combo {
         margin:0;
         float:left;
-        width:200px;
       }
 
       things-resource-combo::shadow label {
@@ -169,6 +168,13 @@ Copyright © HatioLab Inc. All rights reserved.
 
       things-locale-combo::shadow input {
         width:100px;
+      }
+      things-locale-combo::shadow iron-icon{
+        height:26px !important;
+        margin-bottom:0 !important;padding:0 4px !important;
+      }
+      img{
+        margin-left:33%
       }
     </style>
     
@@ -337,7 +343,7 @@ Copyright © HatioLab Inc. All rights reserved.
          */
         roleRequestUrl: {
           type: String,
-          value: 'request_auths/account/auth/request'
+          observer: '_roleReqUrlChanged'
         }
       },
 
@@ -408,6 +414,16 @@ Copyright © HatioLab Inc. All rights reserved.
        */
       computeSystemName: function(system) {
         return system.toUpperCase()
+      },
+
+      /**
+       * roleRequestUrl이 변경되면 실행
+       * roleRequestUrl의 값이 있으면 showRequestRole을 true로
+       * roleRequestUrl의 값이 없으면 showRequestRole을 false
+       * @param  String roleReqUrl role 정보를 요청하는 url
+       */
+      _roleReqUrlChanged: function(roleReqUrl) {
+        this.showRequestRole = roleReqUrl ? true : false;
       },
 
       /**
