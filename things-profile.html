@@ -39,15 +39,21 @@ Copyright © HatioLab Inc. All rights reserved.
 		</style>
 
 		<things-i18n-msg msgid="button.profile" msg="{{labelProfile}}" auto hidden>profile</things-i18n-msg>
+		<things-i18n-msg msgid="label.menu" msg="{{labelMenu}}" auto hidden>Menu</things-i18n-msg>
 
-		<paper-icon-button 
-			id="account"
-			icon="icons:account-circle"
-			title="[[labelProfile]]"
-			on-tap="open">
-		</paper-icon-button>
-		{{globals.user.name}}
-
+		<div>
+			<div hidden="[[!isMobile]]">[[labelMenu]]</div>
+			
+			<paper-icon-button 
+				id="account"
+				icon="icons:account-circle"
+				title="[[labelProfile]]"
+				on-tap="open">
+			</paper-icon-button>
+			
+			<div hidden="[[isMobile]]">{{globals.user.name}}</div>
+		</div>
+		
 		<things-profile-dialog 
 			id="dialog"
 			system="[[system]]"
