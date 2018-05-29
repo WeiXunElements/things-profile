@@ -9,12 +9,12 @@ Copyright © HatioLab Inc. All rights reserved.
 <link rel="import" href="../things-msg-box-behavior/things-msg-box-behavior.html">
 
 <!--
-## things-tab-login-history
+## things-profile-tab-login
 
-	유저 로그 정보
+	로그인 이력
 -->
 
-<dom-module id="things-tab-login-history">
+<dom-module id="things-profile-tab-login">
 	<template>
 		<style>
 			:host {
@@ -52,7 +52,7 @@ Copyright © HatioLab Inc. All rights reserved.
 
 	<script>
 		Polymer({
-			is: 'things-tab-login-history',
+			is: 'things-profile-tab-login',
 
 			behaviors: [
 				Things.MsgBoxBehavior
@@ -247,7 +247,6 @@ Copyright © HatioLab Inc. All rights reserved.
 																	moment(new Date(Date.parse(new Date) - 3 * (this.DateCount - 1) * 1000 * 60 * 60 * 24)).format('YYYY-MM-DD') });
 					this.$['search-form'].submitMyForm();
 				}
-				
 			}
 		})
 	</script>
