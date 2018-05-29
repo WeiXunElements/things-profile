@@ -12,6 +12,7 @@ Copyright © HatioLab Inc. All rights reserved.
 <link rel="import" href="../things-i18n-msg/things-i18n-msg.html">
 
 <link rel="import" href="./things-profile-dialog.html">
+<link rel="import" href="./things-profile-history.html">
 
 <!--
 ## things-profile
@@ -36,6 +37,10 @@ Copyright © HatioLab Inc. All rights reserved.
 				@apply(--things-small-icon);
 				margin-right: 3px;
 			}
+
+			#user-name {
+				cursor: pointer;
+			}
 		</style>
 
 		<things-i18n-msg msgid="button.profile" msg="{{labelProfile}}" auto hidden>profile</things-i18n-msg>
@@ -51,7 +56,7 @@ Copyright © HatioLab Inc. All rights reserved.
 				on-tap="open">
 			</paper-icon-button>
 			
-			<span hidden="[[isMobile]]">{{globals.user.name}}</span>
+			<span id="user-name" on-tap="openUserLog" hidden="[[isMobile]]">{{globals.user.name}}</span>
 		</div>
 		
 		<things-profile-dialog 
@@ -138,6 +143,19 @@ Copyright © HatioLab Inc. All rights reserved.
 			 */
 			open: function() {
 				this.$.dialog.open()
+			},
+
+			openUserLog: function() {
+				event.preventDefault();
+				var view = document.createElement('things-profile-history');
+				view.title = Things.DataGlobal.t('title.security_event');
+
+				this.fire('things-open-custom-size-dialog', {
+					view: view,
+					modal: true,
+					dialogSize: 'large',
+					closeCallback: function(){}
+				});
 			},
 
 			/**
