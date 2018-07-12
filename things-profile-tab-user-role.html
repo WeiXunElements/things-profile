@@ -30,7 +30,7 @@ Copyright © HatioLab Inc. All rights reserved.
 -->
 
 <dom-module id="things-profile-tab-user-role">
-	<template>
+    <template>
 		<style>
 			:host {
 				display: block;
@@ -69,124 +69,142 @@ Copyright © HatioLab Inc. All rights reserved.
 		</things-resource-grid>
 	</template>
 
-	<script>
-		Polymer({
-			is: 'things-profile-tab-user-role',
+    <script>
+        Polymer({
+            is: 'things-profile-tab-user-role',
 
-			behaviors: [
-				Things.MenuGridContentBehavior,
-				Things.DetailPopupBehavior,
-				Things.ApprSubmitPopupBehavior
-			],
+            behaviors: [
+                Things.MenuGridContentBehavior,
+                Things.DetailPopupBehavior,
+                Things.ApprSubmitPopupBehavior
+            ],
 
             properties: {
                 gridConfig: {
-					type: Object,
-					value: function() {
-						return {
-						checkBar: false
-						};
-					}
-				},
+                    type: Object,
+                    value: function() {
+                        return {
+                            checkBar: false
+                        };
+                    }
+                },
 
                 gridModel: {
-					type: Array,
-					value: function() {
-						return [ {
-							fieldName: 'user_account_id'
-						}, {
-							fieldName: 'role_id'
-						}, {
-							fieldName: 'status'
-						}, {
-							fieldName: 'updated_at'
-						}];
-					}
-				},
+                    type: Array,
+                    value: function() {
+                        return [{
+                            fieldName: 'user_account_id'
+                        }, {
+                            fieldName: 'role',
+                            dataType: 'object'
+                        }, {
+                            fieldName: 'status'
+                        }, {
+                            fieldName: 'updated_at'
+                        }];
+                    }
+                },
 
                 gridColumns: {
-					type: Array,
-					value: function() {
-						return [ {
-							name: 'user_account_id',
-							fieldName: 'user_account_id',
-							width: 150,
-							editable: false,
-							header: {
-								text: Things.DataGlobal.t('label.id')
-							},
-							styles: {
-								textAlignment: 'center'
-							}
-						}, {
-							name: 'role_id',
-							fieldName: 'role_id',
-							width: 250,
-							editable: false,
-							header: {
-								text: Things.DataGlobal.t('label.role')
-							},
-							styles: {
-								textAlignment: 'center'
-							}
-						}, {
-							name: 'status',
-							fieldName: 'status',
-							width: 140,
-							editable: false,
-							header: {
-								text: Things.DataGlobal.t('label.status')
-							},
-							styles: {
-								textAlignment: 'center'
-							}
-						}, {
-							name: 'updated_at',
-							fieldName: 'updated_at',
-							width: 140,
-							editable: false,
-							header: {
-								text: Things.DataGlobal.t('label.updated_at')
-							},
-							styles: {
-								textAlignment: 'center'
-							}
-						}];
-					},
-				},
+                    type: Array,
+                    value: function() {
+                        return [{
+                            name: 'user_account_id',
+                            fieldName: 'user_account_id',
+                            width: 150,
+                            editable: false,
+                            header: {
+                                text: Things.DataGlobal.t('label.id')
+                            },
+                            styles: {
+                                textAlignment: 'center'
+                            }
+                        }, {
+                            name: 'role',
+                            fieldName: 'role',
+                            width: 250,
+                            editable: false,
+                            header: {
+                                text: Things.DataGlobal.t('label.role')
+                            },
+                            styles: {
+                                textAlignment: 'center',
+                                iconIndex: 'resource-column'
+                            },
+                            userData: {
+                                titleField: 'name',
+                                resourceType: 'Entity',
+                                resourceName: 'Role',
+                                ownerField: 'role'
+                            },
+                            displayCallback: function(index, value) {
+                                var rowObj = index.getRow().getRowObject();
+                                var fieldName = index.column.dataFieldName();
+                                var userData = index.column.userData();
+                                var columnObj = rowObj[fieldName];
+                                var retVal = columnObj ? columnObj[userData.titleField] : "";
+                                if (columnObj && columnObj.description) {
+                                    retVal = retVal + " (" + columnObj.description + ")";
+                                }
+                                return retVal;
+                            }
+                        }, {
+                            name: 'status',
+                            fieldName: 'status',
+                            width: 140,
+                            editable: false,
+                            header: {
+                                text: Things.DataGlobal.t('label.status')
+                            },
+                            styles: {
+                                textAlignment: 'center'
+                            }
+                        }, {
+                            name: 'updated_at',
+                            fieldName: 'updated_at',
+                            width: 140,
+                            editable: false,
+                            header: {
+                                text: Things.DataGlobal.t('label.updated_at')
+                            },
+                            styles: {
+                                textAlignment: 'center'
+                            }
+                        }];
+                    },
+                },
 
-				gridButtons: {
-					type: Array,
-					value: function() {
-						return [{
-							id: 'export-btn',
-							text: 'export',
-							icon: 'icons:swap-vert'
-						}];
-					}
-				},
+                gridButtons: {
+                    type: Array,
+                    value: function() {
+                        return [{
+                            id: 'export-btn',
+                            text: 'export',
+                            icon: 'icons:swap-vert'
+                        }];
+                    }
+                },
 
                 searchFormFields: {
                     type: Array,
                     value: function() {
                         return [{
-							label: Things.DataGlobal.t('label.status'),
-							name: "status",
-							op: "eq"
-						},
-						{
-							name: "user_account_id",
-							op: "eq",
-							type: "hidden",
-							default: Things.DataGlobal.user.id
-						}];
+                            label: Things.DataGlobal.t('label.status'),
+                            name: "status",
+                            op: "eq"
+                        }, {
+                            name: "user_account_id",
+                            op: "eq",
+                            type: "hidden",
+                            default: Things.DataGlobal.user.id
+                        }];
                     }
                 }
             },
 
-            ready: function(){
-				this.$['search-form'].submitMyForm();
-			}
-		});
-	</script>
+            ready: function() {
+                this.$['search-form'].submitMyForm();
+            }
+        });
+    </script>
 </dom-module>
